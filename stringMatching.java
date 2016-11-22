@@ -15,12 +15,10 @@ import java.util.Scanner;
  */
 
 public class stringMatching {
-
+	
 	public static void main(String[] args) {
 		File inFile = null;
 		
-		ArrayList string = new ArrayList();
-
 		if (0 < args.length) {
 
 			inFile = new File(args[0]);
@@ -46,8 +44,10 @@ public class stringMatching {
 
 			while ((sCurrentLine = br.readLine()) != null) {
 				// System.out.println(sCurrentLine);
+				
 				System.out.println( sCurrentLine.toCharArray() );
-				System.out.println(">>");
+				
+				handleCharacters(br);
 			}
 
 		}
@@ -64,6 +64,25 @@ public class stringMatching {
 				ex.printStackTrace();
 			}
 		}
+	} /* END MAIN */
+
+
+	private static void handleCharacters(Reader reader) throws IOException {
+
+		ArrayList stringInput = new ArrayList();
+		
+		int r;
+		while ((r = reader.read()) != -1) {
+			char ch = (char) r;
+			// System.out.println("Do something with " + ch);
+			stringInput.add(ch);
+		}
+		
+		/* Cool slick wat to iterate an Arraylist with lambdas */
+		 stringInput.forEach((a)->System.out.println(a));
+		
+		
 	}
+
 
 }
