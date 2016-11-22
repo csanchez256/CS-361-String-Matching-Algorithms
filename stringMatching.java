@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /*
  * This program is best run through the terminal
@@ -14,11 +13,15 @@ import java.util.Scanner;
  * 
  */
 
+/**
+ * @author santos
+ *
+ */
 public class stringMatching {
-	
+
 	public static void main(String[] args) {
 		File inFile = null;
-		
+
 		if (0 < args.length) {
 
 			inFile = new File(args[0]);
@@ -33,26 +36,14 @@ public class stringMatching {
 		/* Read user input from commandline */
 
 		System.out.print("Please enter a pattern: ");
-		String name = System.console().readLine();
-		System.out.println("Pattern is " + name);
+		String pattern = System.console().readLine();
+		System.out.println("You entered: " + pattern);
 
 		try {
 
-			String currentLine;
-
 			br = new BufferedReader(new FileReader(inFile));
-			
-			handleCharacters(br);
 
-			while ((currentLine = br.readLine()) != null) {
-				// System.out.println(sCurrentLine);
-				
-				System.out.println( currentLine.toCharArray() );
-				
-				
-				//handleCharacters(br);
-			}
-
+			handleCharacters(br, pattern);
 		}
 
 		catch (IOException e) {
@@ -69,23 +60,68 @@ public class stringMatching {
 		}
 	} /* END MAIN */
 
-
-	private static void handleCharacters(Reader reader) throws IOException {
+	
+	
+	/**
+	 * 
+	 * @param reader
+	 * @param pattern
+	 * @throws IOException
+	 */
+	private static void handleCharacters(Reader reader, String pattern) throws IOException {
 
 		ArrayList<Character> stringInput = new ArrayList<Character>();
-		
-		int r;
+		ArrayList<Character> patternInput = new ArrayList<Character>();
+
+		int r, n, m;
+
+		/* Store "String" into an ArrayList */
 		while ((r = reader.read()) != -1) {
 			char ch = (char) r;
-			// System.out.println("Do something with " + ch);
 			stringInput.add(ch);
 		}
-		
-		/* Cool slick way to iterate an Arraylist with lambdas */
-		stringInput.forEach((a)->System.out.print(" " + a));
-		
-		
+
+		/* Store "Pattern" into an ArrayList */
+		for (int j = 0; j < pattern.length(); j++) {
+			patternInput.add(pattern.charAt(j));
+		}
+
+		/*
+		 * Cool slick way to iterate an Arraylist with lambdas... LAMBDAS ARE
+		 * COOL NOW
+		 */
+		// stringInput.forEach((a)->System.out.print(" " + a));
+
+		n = stringInput.size();
+		m = patternInput.size();
+
+		//patternInput.forEach( (a) -> System.out.print( " " + a) );
+		searchArrays(n,m,stringInput,patternInput);
 	}
+	
+	
+	/**
+	 * 
+	 * @param n - size of the String
+	 * @param m - size of the Pattern
+	 * @param stringInput
+	 * @param patternInput
+	 */
+	private static void searchArrays(int n, int m, ArrayList<Character> stringInput,
+			ArrayList<Character> patternInput) {
 
+//		patternInput.forEach((a) -> System.out.print(" " + a));
+//		stringInput.forEach((a) -> System.out.print(" " + a));
 
-}
+		for (int i = 1; i < n; i++) {
+			for (int j = 1; j < m; j++) {
+
+				if (stringInput.get(i + j - 1) != patternInput.get(j)) break;
+
+				else if (j == (m - 1) ) System.out.println("String match");
+			}
+		}
+	}
+	
+	
+}/* Class block */
