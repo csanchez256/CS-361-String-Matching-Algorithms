@@ -38,16 +38,19 @@ public class stringMatching {
 
 		try {
 
-			String sCurrentLine;
+			String currentLine;
 
 			br = new BufferedReader(new FileReader(inFile));
+			
+			handleCharacters(br);
 
-			while ((sCurrentLine = br.readLine()) != null) {
+			while ((currentLine = br.readLine()) != null) {
 				// System.out.println(sCurrentLine);
 				
-				System.out.println( sCurrentLine.toCharArray() );
+				System.out.println( currentLine.toCharArray() );
 				
-				handleCharacters(br);
+				
+				//handleCharacters(br);
 			}
 
 		}
@@ -69,7 +72,7 @@ public class stringMatching {
 
 	private static void handleCharacters(Reader reader) throws IOException {
 
-		ArrayList stringInput = new ArrayList();
+		ArrayList<Character> stringInput = new ArrayList<Character>();
 		
 		int r;
 		while ((r = reader.read()) != -1) {
@@ -78,8 +81,8 @@ public class stringMatching {
 			stringInput.add(ch);
 		}
 		
-		/* Cool slick wat to iterate an Arraylist with lambdas */
-		 stringInput.forEach((a)->System.out.println(a));
+		/* Cool slick way to iterate an Arraylist with lambdas */
+		stringInput.forEach((a)->System.out.print(" " + a));
 		
 		
 	}
