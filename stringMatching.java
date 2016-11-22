@@ -1,7 +1,9 @@
 import java.io.*;
 import java.util.ArrayList;
 
-/*
+/**
+ * @author Christopher Santos Sanchez; CS-361 Algorithms & Data Structures; Fall 2016
+ * 
  * This program is best run through the terminal
  * A text file will be passed as a command line 
  * argument.
@@ -9,17 +11,14 @@ import java.util.ArrayList;
  * Compile by typing: javac stringMatching.java
  * Then run:
  * 
- * > java stringMatching <textfile.example>
- * 
+ *  > java stringMatching <textfile.example>
  */
 
-/**
- * @author santos
- *
- */
 public class stringMatching {
 
 	public static void main(String[] args) {
+		
+		//long startTime = System.currentTimeMillis();
 		File inFile = null;
 
 		if (0 < args.length) {
@@ -34,10 +33,11 @@ public class stringMatching {
 		BufferedReader br = null;
 
 		/* Read user input from commandline */
-
-		System.out.print("Please enter a pattern: ");
-		String pattern = System.console().readLine();
-		System.out.println("You entered: " + pattern);
+//		System.out.print("Please enter a pattern: ");
+//		String pattern = System.console().readLine();
+		
+		/* TODO  JUST FOR TESTING PURPOSES HARD CODE DEFAULT STRING */
+		String pattern = "Frisco";
 
 		try {
 
@@ -58,6 +58,7 @@ public class stringMatching {
 				ex.printStackTrace();
 			}
 		}
+		
 	} /* END MAIN */
 
 	
@@ -95,8 +96,15 @@ public class stringMatching {
 		n = stringInput.size();
 		m = patternInput.size();
 
-		//patternInput.forEach( (a) -> System.out.print( " " + a) );
+		
+		long startTime = System.nanoTime();
+		
 		searchArrays(n,m,stringInput,patternInput);
+		
+		long endTime   = System.nanoTime();
+		long totalTime = endTime - startTime;
+		
+		System.out.println("Total Runtime: " + totalTime + " nano seconds");
 	}
 	
 	
@@ -110,17 +118,18 @@ public class stringMatching {
 	private static void searchArrays(int n, int m, ArrayList<Character> stringInput,
 			ArrayList<Character> patternInput) {
 
-//		patternInput.forEach((a) -> System.out.print(" " + a));
-//		stringInput.forEach((a) -> System.out.print(" " + a));
-
 		for (int i = 1; i < n; i++) {
 			for (int j = 1; j < m; j++) {
 
 				if (stringInput.get(i + j - 1) != patternInput.get(j)) break;
 
-				else if (j == (m - 1) ) System.out.println("String match");
+				else if (j == (m - 1) ) {
+					System.out.println("String match!");
+					return;
+				}
 			}
 		}
+		System.out.println("Pattern was not found");
 	}
 	
 	
