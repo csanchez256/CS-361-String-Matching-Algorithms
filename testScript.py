@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-import sys
+
+import sys	  #for command line args
 import os
 import subprocess
+
 
 def runSimulation(cmd):
 	
@@ -12,9 +14,10 @@ def runSimulation(cmd):
 
 	for n in range(trials):
 	
-		os.system(cmd) #cmd is a command line string
+		os.system(cmd)
 	
-		output = subprocess.check_output("java stringMatching STRING.input", shell = True)
+		output = subprocess.check_output(cmd, shell = True)
+		
 		#parse the output from command prompt
 		for row in output.split('\n'):
 			if ': ' in row:
@@ -22,7 +25,6 @@ def runSimulation(cmd):
          			x = value.strip('nano seconds')
                         	num = int(x)
 				runtimes.append(num)		              			
-
 
 	# Loops through list, and sums each element 
 	print "=================================="
