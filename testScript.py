@@ -4,9 +4,7 @@ import sys
 import os
 import subprocess
 
-inputFile = sys.argv[1]
-
-def runSimulation():
+def runSimulation(cmd):
 	
 	runtimes = []
 
@@ -14,14 +12,13 @@ def runSimulation():
 
 	for n in range(trials):
 	
-		os.system("java stringMatching STRING.input")
+		os.system(cmd) #cmd is a command line string
 	
 		output = subprocess.check_output("java stringMatching STRING.input", shell = True)
 		#parse the output from command prompt
 		for row in output.split('\n'):
 			if ': ' in row:
 				key, value = row.split(': ')
-				#result[key.strip('Total Runtime')] = value.strip('nano seconds')
          			x = value.strip('nano seconds')
                         	num = int(x)
 				runtimes.append(num)		              			
@@ -32,5 +29,11 @@ def runSimulation():
 	print "Average runtime is " , ( sum( int(n) for n in runtimes) ) / trials , " ns"
 	print "=================================="
 
+try:
+	inputFile = sys.argv[1]
+	cmd = 'java stringMatching %s' % inputFile
+	runSimulation(cmd)
 
-runSimulation()
+except IndexError:
+	print "not enough commands"
+
