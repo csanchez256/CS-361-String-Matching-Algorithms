@@ -1,30 +1,31 @@
 #!/usr/bin/env python
+# Christopher Sanchez; CS-361; Data Stuctures and Algorithms
+# TO RUN > ./testScript.py <file name> <word to search>
 
-
-import sys	  #for command line args
-import os
 import subprocess
+import sys	   #for command line args
+import os
 
-
-def runSimulation(cmd):
+def runSimulation(cmd, trials):
 	
 	runtimes = []
 
-	trials = 10
-
 	for n in range(trials):
-	
-		os.system(cmd)
-	
+
+		# Enter command into terminal
+		subprocess.call( cmd, shell = True )
+
 		output = subprocess.check_output(cmd, shell = True)
-		
+	
+
 		#parse the output from command prompt
 		for row in output.split('\n'):
 			if ': ' in row:
 				key, value = row.split(': ')
          			x = value.strip('nano seconds')
                         	num = int(x)
-				runtimes.append(num)		              			
+				runtimes.append(num)
+		              			
 
 	# Loops through list, and sums each element 
 	print "=================================="
@@ -33,8 +34,13 @@ def runSimulation(cmd):
 
 try:
 	inputFile = sys.argv[1]
-	cmd = 'java stringMatching %s' % inputFile
-	runSimulation(cmd)
+	pattern = sys.argv[2]
+
+	cmd = 'java stringMatching %s %s' % (inputFile , pattern)
+
+	trials = input('Enter number of trials: ')
+	
+	runSimulation(cmd, trials)
 
 except IndexError:
 	print "not enough commands"

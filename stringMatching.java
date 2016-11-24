@@ -16,14 +16,17 @@ import java.util.ArrayList;
 
 public class stringMatching {
 
+	int debug = 0;
+	
 	public static void main(String[] args) {
 		
-		//long startTime = System.currentTimeMillis();
 		File inFile = null;
+		String pattern = null;
 
 		if (0 < args.length) {
 
 			inFile = new File(args[0]);
+			pattern = args[1];
 		}
 
 		else {
@@ -31,13 +34,6 @@ public class stringMatching {
 			System.exit(0);
 		}
 		BufferedReader br = null;
-
-		/* Read user input from commandline */
-//		System.out.print("Please enter a pattern: ");
-//		String pattern = System.console().readLine();
-		
-		/* TODO  JUST FOR TESTING PURPOSES HARD CODE DEFAULT STRING */
-		String pattern = "Frisco";
 
 		try {
 
@@ -118,18 +114,20 @@ public class stringMatching {
 	private static void searchArrays(int n, int m, ArrayList<Character> stringInput,
 			ArrayList<Character> patternInput) {
 
+		int occurances = 0;
 		for (int i = 1; i < n; i++) {
 			for (int j = 1; j < m; j++) {
 
 				if (stringInput.get(i + j - 1) != patternInput.get(j)) break;
 
 				else if (j == (m - 1) ) {
-					System.out.println("String match!");
-					return;
+					//System.out.println("String match!");
+					occurances++;
 				}
 			}
 		}
-		System.out.println("Pattern was not found");
+		if( occurances > 0 ) System.out.println("Number of occurances is " + occurances);
+		else System.out.println("Pattern was not found");
 	}
 	
 	
