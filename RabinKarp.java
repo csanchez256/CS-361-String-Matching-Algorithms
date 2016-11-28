@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Christopher Santos Sanchez; CS-361 Algorithms & Data Structures; Fall 2016
@@ -22,6 +23,7 @@ public class RabinKarp {
 		
 		File inFile = null;
 		String pattern = null;
+		
 
 		if (0 < args.length) {
 
@@ -88,8 +90,9 @@ public class RabinKarp {
 		 * COOL NOW
 		 */
 		// stringInput.forEach((a)->System.out.print(" " + a));
-
-		n = stringInput.size();
+        
+		// I think it includes null characatr in size()
+		n = stringInput.size() - 1;
 		m = patternInput.size();
 
 		
@@ -111,57 +114,66 @@ public class RabinKarp {
 	 * @param stringInput
 	 * @param patternInput
 	 */
+//	function RabinKarp(string s[1..n], string pattern[1..m])
+//	2   hpattern := hash(pattern[1..m]);  hs := hash(s[1..m])
+//	3   for i from 1 to n-m+1
+//	4     if hs = hpattern
+//	5       if s[i..i+m-1] = pattern[1..m]
+//	6         return i
+//	7 
+//	    hs := hash(s[i+1..i+m])
+//	8   return not found
+	
+	
 	private static void rabinKarp(int n, int m, ArrayList<Character> stringInput,
 			ArrayList<Character> patternInput) {
-
 		int occurances = 0;
-		int d = 256;       // number of characters in d-ary alphabet
-		int q = 127;
-		int p = 0;
-		int t = 0;
+		int oldHash = 0;
+	
+		//System.out.println("substring " + stringInput.subList(2, 5));
+		int patternHash = hash(patternInput.subList(0, m));
+		int textHash = hash(stringInput.subList(0, m));
+		System.out.println("n = " + n + "m = " + m);
+		oldHash = 1;
 		
-		n = n -1; //because size includes null character I think
-		
-		int h = (int) Math.pow(d, m-1) % q;
-		
-		// preprocessing, or hashing
-		// This will also check if there's a match before any shifting
-		for(int i = 0; i < m ; i++){
-			p = ( d*p + patternInput.get(i) ) % q;
-			t = ( d*t + stringInput.get(i) ) % q;
-			System.out.println("t is " + t);
-
-		}
-		
-		System.out.println("p is " + p);
-//		System.out.println("t is " + t);
-		
-		if (p == t) occurances++;
-		
-//		System.out.println("n is " + n);
-//		System.out.println("m is " + m);
-		
-		// Once a hash value matches, we have to check and make sure it's not a collision
-		for(int s = 0; s < ( n - m ); s++ ){
-			if ( p == t ){
-				System.out.println(" called");
-				for (int k = 0; k < m; k++){
-					if( patternInput.get(k) != stringInput.get(k + s) ){
-						break;
-					}
-					else if( s == ( m - 1 )) occurances++;
+		for (int i = 0; i < (n - m + 1); i++){
+			if (patternHash == textHash){
+				System.out.println("match found");
+				if (stringInput.subList( i , i + m  ) == patternInput.subList(0, m) ){
+					System.out.println("Match");
 				}
 			}
-			if ( s < (n - m) ){
-				//remove the high oder bit and add the low order bit
-				t = ( d*( t - stringInput.get(s+1)*h) + stringInput.get(s + m + 1) ) % q;
-				System.out.println(" t" + t);
-			}
+			textHash = (hash(stringInput.subList(i + 1, i + m + 1 )));
 		}
+		
 		
 		
 		if( occurances > 0 ) System.out.println("Number of occurances is " + occurances);
 		else System.out.println("Pattern was not found");
+	}
+	
+	private static int hash(List<Character> list){
+		int x = list.size();
+		int exp = x - 1;
+		int prime = 101;
+		int h = 0;
+		
+		for (int i = 0; i < x; i++){
+			h += (list.get(i)) * (Math.pow(prime, exp));
+			exp--;
+		}
+		
+
+		
+		return h;
+	}
+	
+	private static int hashShift(int oldHash){
+		int prime = 101;
+////    base   old hash    old 'a'         new 'a'
+//hash("bra") = [101 × (999,509 - (97 × 1012))] + (97 × 1010) = 1,011,309
+//		int hshift = (prime * ())
+		return 0;
 	}
 	
 	
