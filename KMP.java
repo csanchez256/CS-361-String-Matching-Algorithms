@@ -97,8 +97,11 @@ public class KMP {
 		
 		//Now calculate the failure table
         failureTable(patternInput, failTable);
-        kmpSearch(stringInput, patternInput, failTable);
+        int occurances = kmpSearch(stringInput, patternInput, failTable);
         
+        if( occurances > 0 ) System.out.println("Pattern found at " + occurances);
+        
+//        else System.out.println("Pattern not found");
         
         //failTable.forEach((a)->System.out.print(" " + a));
         
@@ -110,9 +113,45 @@ public class KMP {
 	}/* End handle characters */
 
 
-	private static void kmpSearch(ArrayList<Character> stringInput, 
-			ArrayList<Character> patternInput, ArrayList<Integer> failTable) {
-		failTable.forEach((a)->System.out.println(" " + a));
+	
+	/**
+	 * 
+	 * @param stringInput
+	 * @param patternInput
+	 * @param failTable
+	 * 
+	 * returns the index where Word is located in String
+	 */
+	private static int kmpSearch(ArrayList<Character> stringInput, ArrayList<Character> patternInput,
+			ArrayList<Integer> failTable) {
+
+		int m = 0;
+		int i = 0;
+		int occurances = 0;
+
+		while ( (m + i) < stringInput.size() ) {
+			if (patternInput.get(i) == stringInput.get(m + i)) {
+				if (i == patternInput.size() - 1) {
+					return m;
+					//occurances++;
+				}
+				i++;
+			} else {
+				if (failTable.get(i) > -1) {
+
+					m = m + i - failTable.get(i);
+					i = failTable.get(i);
+				} else {
+					m++;
+					i = 0;
+				}
+			}
+		}
+		if( occurances > 0 ) return occurances;
+		else {
+			System.out.println("Pattern not found");
+			return 0;
+		}
 	}
 
 
