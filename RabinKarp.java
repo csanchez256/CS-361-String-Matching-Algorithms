@@ -60,7 +60,6 @@ public class RabinKarp {
 	} /* END MAIN */
 
 	
-	
 	/**
 	 * 
 	 * @param reader
@@ -114,16 +113,6 @@ public class RabinKarp {
 	 * @param stringInput
 	 * @param patternInput
 	 */
-//	function RabinKarp(string s[1..n], string pattern[1..m])
-//	2   hpattern := hash(pattern[1..m]);  hs := hash(s[1..m])
-//	3   for i from 1 to n-m+1
-//	4     if hs = hpattern
-//	5       if s[i..i+m-1] = pattern[1..m]
-//	6         return i
-//	7 
-//	    hs := hash(s[i+1..i+m])
-//	8   return not found
-	
 	
 	private static void rabinKarp(int n, int m, ArrayList<Character> stringInput,
 			ArrayList<Character> patternInput) {
@@ -131,13 +120,12 @@ public class RabinKarp {
 		ArrayList<Integer> oldChar = new ArrayList<>();
 		
 		int occurances = 0;
-		//int h = 0;
-		int prime = 101;
+		int prime = 7;
 		int radix = 256;
 
 		//Here is the initial hashing part
-		int patternHash = hash(patternInput.subList(0, m), prime );
-		int textHash = hash(stringInput.subList(0, m), prime );
+		long patternHash = hash(patternInput.subList(0, m), prime );
+		long textHash = hash(stringInput.subList(0, m), prime );
 
 		
 		for (int i = 0; i < (n - m + 1); i++){
@@ -151,19 +139,17 @@ public class RabinKarp {
 				}
 			}
 			
-			int x = (int) (Math.pow(prime, patternInput.size() - 1 ));
+		//	long x = (long) (Math.pow(prime, patternInput.size() - 1 ));
 
-			//textHash = (hash(stringInput.subList(i + 1, i + m + 1 ), h ) );
+			textHash = (hash(stringInput.subList(i + 1, i + m + 1 ), prime ) );
 			
 			/* base * (old hash - old character ) + new character */
-			System.out.println("old hash " + textHash);
-			textHash = (101 * (textHash - stringInput.get(i)*x) + stringInput.get(i+m));
+		//	System.out.println("old hash " + textHash);
+		//	textHash = (101 * (textHash - stringInput.get(i)*x) + stringInput.get(i+m));
 			
 			//in case we get negative values
-			if (textHash < 0 ) textHash = (textHash + prime);
+			//if (textHash < 0 ) textHash = (textHash + prime);
 		}
-		
-		
 		
 		if( occurances > 0 ) System.out.println("Number of occurances is " + occurances);
 		else System.out.println("Pattern was not found");
@@ -180,7 +166,5 @@ public class RabinKarp {
 		}
 		return h;
 	}
-	
-	
 	
 }/* Class block */
