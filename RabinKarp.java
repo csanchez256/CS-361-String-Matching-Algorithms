@@ -127,21 +127,40 @@ public class RabinKarp {
 	
 	private static void rabinKarp(int n, int m, ArrayList<Character> stringInput,
 			ArrayList<Character> patternInput) {
+		
+		ArrayList<Integer> oldChar = new ArrayList<>();
+		
 		int occurances = 0;
-		int h = 0;
+		//int h = 0;
+		int prime = 101;
+		int radix = 256;
 
-		int patternHash = hash(patternInput.subList(0, m), h);
-		int textHash = hash(stringInput.subList(0, m), h);
+		//Here is the initial hashing part
+		int patternHash = hash(patternInput.subList(0, m), prime );
+		int textHash = hash(stringInput.subList(0, m), prime );
 
 		
 		for (int i = 0; i < (n - m + 1); i++){
 			
 			if (patternHash == textHash){
+				
+				/* TODO this part doesn't seem to check correctly with large values */
 				if (stringInput.subList( i  , i + m ).equals(patternInput.subList(0, m) )){
-                    occurances++;					
+                    occurances++;
+                    System.out.println(" index is " + i);
 				}
 			}
-			textHash = (hash(stringInput.subList(i + 1, i + m + 1 ), h ) );
+			
+			int x = (int) (Math.pow(prime, patternInput.size() - 1 ));
+
+			//textHash = (hash(stringInput.subList(i + 1, i + m + 1 ), h ) );
+			
+			/* base * (old hash - old character ) + new character */
+			System.out.println("old hash " + textHash);
+			textHash = (101 * (textHash - stringInput.get(i)*x) + stringInput.get(i+m));
+			
+			//in case we get negative values
+			if (textHash < 0 ) textHash = (textHash + prime);
 		}
 		
 		
@@ -150,25 +169,18 @@ public class RabinKarp {
 		else System.out.println("Pattern was not found");
 	}
 	
-	private static int hash(List<Character> list, int h){
+	private static int hash(List<Character> list, int prime){
 		int x = list.size();
 		int exp = x - 1;
-		int prime = 101;
+		int h = 0;
 		
 		for (int i = 0; i < x; i++){
 			h += (list.get(i)) * (Math.pow(prime, exp));
 			exp--;
 		}
-		
-
-		
 		return h;
 	}
 	
-	private static int hashShift(int oldHash){
-		int prime = 101;
-		return 0;
-	}
 	
 	
 }/* Class block */
