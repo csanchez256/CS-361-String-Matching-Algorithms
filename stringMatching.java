@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Compile by typing: javac stringMatching.java
  * Then run:
  * 
- *  > java stringMatching <textfile.example>
+ *  > java stringMatching <textfile.example> <pattern>
  */
 
 public class stringMatching {

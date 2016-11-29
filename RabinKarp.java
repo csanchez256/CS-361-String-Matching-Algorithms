@@ -128,10 +128,13 @@ public class RabinKarp {
 	private static void rabinKarp(int n, int m, ArrayList<Character> stringInput,
 			ArrayList<Character> patternInput) {
 		int occurances = 0;
+		int previousChar = 0;
+		int lastCharInSubstring = 0;
+		int textHash = 0;
 //		int h = 0;
 
-		int patternHash = hash(patternInput.subList(0, m));
-		int textHash = hash(stringInput.subList(0, m) );
+		int patternHash = hash(patternInput.subList(0, m), previousChar, textHash, lastCharInSubstring);
+		textHash = hash(stringInput.subList(0, m), previousChar, textHash, lastCharInSubstring );
 
 		
 		for (int i = 0; i < (n - m + 1); i++){
@@ -142,8 +145,9 @@ public class RabinKarp {
 				}
 			}
 			
-			int previousChar = stringInput.get(i);
-			textHash = (hash(stringInput.subList(i + 1, i + m + 1 ) ) );
+		    previousChar = stringInput.get(i);
+		    lastCharInSubstring = stringInput.get(i + m);
+			textHash = hash(stringInput.subList(i + 1, i + m + 1 ), previousChar, textHash,lastCharInSubstring );
 			
 		}
 		
@@ -154,17 +158,30 @@ public class RabinKarp {
 		else System.out.println("Pattern was not found");
 	}
 	
-	private static int hash(List<Character> list){
+	private static int hash(List<Character> list, int previousChar, int oldHash, int lastCharInSubstring){
 		int x = list.size();
 		int exp = x - 1;
 		int prime = 101;
 		int h = 0;
 		
 //		 int firstChar = (int) (( list.get(0) ) *(Math.pow(prime, exp) ));
+		//System.out.println("Previous char" + previousChar);
 		
-		for (int i = 0; i < x; i++){
-			h += (list.get(i)) * (Math.pow(prime, exp));
-			exp--;
+		if (previousChar == 0) {
+			for (int i = 0; i < x; i++) {
+				h += (list.get(i)) * (Math.pow(prime, exp));
+				exp--;
+			}
+		}
+		//Compute hash of next substring
+		else if (previousChar != 0){
+			h = (int) (( prime * (oldHash - (previousChar * Math.pow(prime, exp)) ) ) + (lastCharInSubstring));
+            // We might get negative value of t, converting it
+            // to positive
+            if (h < 0){
+            h = (h + prime);
+            System.out.println("h is "+ h);
+            }
 		}
 		
 

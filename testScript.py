@@ -27,10 +27,11 @@ def runSimulation(cmd, trials):
 				runtimes.append(num)
 		              			
 
-	# Loops through list, and sums each element 
-	print "=================================="
-	print "Average runtime is " , ( sum( int(n) for n in runtimes) ) / trials , " ns"
-	print "=================================="
+	if (trials > 1):
+		# Loops through list, and sums each element 
+		print "=================================="
+		print "Average runtime is " , ( sum( int(n) for n in runtimes) ) / trials , " ns"
+		print "=================================="
 
 try:
 	inputFile = sys.argv[1]
