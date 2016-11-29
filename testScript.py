@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Christopher Sanchez; CS-361; Data Stuctures and Algorithms
-# TO RUN > ./testScript.py <file name> <word to search>
+# TO RUN > ./testScript.py <program> <file name> <word to search>
 
 import subprocess
 import sys	   #for command line args
@@ -34,10 +34,11 @@ def runSimulation(cmd, trials):
 		print "=================================="
 
 try:
-	inputFile = sys.argv[1]
-	pattern = sys.argv[2]
+	programName = sys.argv[1]
+	inputFile = sys.argv[2]
+	pattern = sys.argv[3]
 
-	cmd = 'java stringMatching %s %s' % (inputFile , pattern)
+	cmd = 'java %s %s %s' % (programName, inputFile , pattern)
 
 	trials = input('Enter number of trials: ')
 	
