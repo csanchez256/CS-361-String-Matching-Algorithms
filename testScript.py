@@ -22,15 +22,16 @@ def runSimulation(cmd, trials):
 		for row in output.split('\n'):
 			if ': ' in row:
 				key, value = row.split(': ')
-         			x = value.strip('nano seconds')
-                        	num = int(x)
+         			x = value.strip('Seconds')
+                        	num = float(x)
 				runtimes.append(num)
 		              			
 
 	if (trials > 1):
-		# Loops through list, and sums each element 
+		# Loops through list, and sums each element
+		average = ( sum( float (n) for n in runtimes ) ) / trials 
 		print "=================================="
-		print "Average runtime is " , ( sum( int(n) for n in runtimes) ) / trials , " ns"
+		print "Average runtime is %.4f " % average , "Seconds"
 		print "=================================="
 
 try:
