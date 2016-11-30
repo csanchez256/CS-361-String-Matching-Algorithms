@@ -93,7 +93,7 @@ public class KMP {
 		//Allocate an empty ArrayList of size - m
 		ArrayList<Integer> failTable = new ArrayList<Integer>(m);
 		
-		long startTime = System.nanoTime();
+		long startTime = System.currentTimeMillis();
 		
 		//Now calculate the failure table
         failureTable(patternInput, failTable);
@@ -105,10 +105,10 @@ public class KMP {
         
         //failTable.forEach((a)->System.out.print(" " + a));
         
-		long endTime   = System.nanoTime();
+		long endTime   = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		
-		System.out.println("Total Runtime: " + totalTime + " nano seconds");
+		System.out.println("Total Runtime: " + ( totalTime / 1000.0 ) + " Seconds");
 		
 	}/* End handle characters */
 
@@ -164,26 +164,26 @@ public class KMP {
 	 */
 	private static void failureTable(ArrayList<Character> patternInput, 
 			ArrayList<Integer> failTable) {
-			int pos = 2; //current index in T
-			int cnd = 0; // zero based index in stringInput
+			int i = 2; //current index in T
+			int j = 0; // zero based index in stringInput
 			
 			//initialize first index of table
 			failTable.add(-1);
 			failTable.add(0);
 
-			while( pos < patternInput.size() ){
-				if ( patternInput.get(pos - 1 ) == patternInput.get(cnd) ){
-					failTable.add(pos, cnd + 1 );
-					cnd++;
-					pos++;
+			while( i < patternInput.size() ){
+				if ( patternInput.get(i - 1 ) == patternInput.get(j) ){
+					failTable.add(i, j + 1 );
+					j++;
+					i++;
 				}
-				else if ( cnd > 0 ){
-					cnd = failTable.get( cnd );
-					failTable.add(pos, 0);
+				else if ( j > 0 ){
+					j = failTable.get( j );
+					failTable.add(i, 0);
 				}
 				else {
-					failTable.add(pos, 0);
-					pos++;
+					failTable.add(i, 0);
+					i++;
 				}
 			}
 	}/* End failureTable function */
