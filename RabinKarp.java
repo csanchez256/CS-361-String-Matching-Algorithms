@@ -112,7 +112,7 @@ public class RabinKarp {
 		
 		ArrayList<Integer> oldChar = new ArrayList<>();
 		
-		int occurances = 0;
+		int occurences = 0;
 		int prime = 101;
 		int radix = 256;
 
@@ -124,13 +124,13 @@ public class RabinKarp {
 			
 			if (patternHash == textHash){
 				if (stringInput.subList( i  , i + m ).equals(patternInput.subList(0, m) )){
-                    occurances++;
+                    occurences++;
 				}
 			}
 			textHash = (hash(stringInput.subList(i + 1, i + m + 1 ), prime ) );
 		}
 		
-		if( occurances > 0 ) System.out.println("Number of occurances is " + occurances);
+		if( occurences > 0 ) System.out.println("Number of occurances is " + occurences);
 		else System.out.println("Pattern was not found");
 	}
 	

@@ -112,18 +112,18 @@ public class stringMatching {
 	private static void searchArrays(int n, int m, ArrayList<Character> stringInput,
 			ArrayList<Character> patternInput) {
 
-		int occurances = 0;
+		int occurences = 0;
 		for (int i = 1; i < n; i++) {
 			for (int j = 1; j < m; j++) {
 
 				if (stringInput.get(i + j - 1) != patternInput.get(j)) break;
 
 				else if (j == (m - 1) ) {
-					occurances++;
+					occurences++;
 				}
 			}
 		}
-		if( occurances > 0 ) System.out.println("Number of occurances is " + occurances);
+		if( occurences > 0 ) System.out.println("Number of occurances is " + occurences);
 		else System.out.println("Pattern was not found");
 	}
 	
