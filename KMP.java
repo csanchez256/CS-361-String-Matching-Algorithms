@@ -125,25 +125,25 @@ public class KMP {
 	private static int kmpSearch(ArrayList<Character> stringInput, ArrayList<Character> patternInput,
 			ArrayList<Integer> failTable) {
 
-		int m = 0;
 		int i = 0;
+		int j = 0;
 		int occurances = 0;
 
-		while ( (m + i) < stringInput.size() ) {
-			if (patternInput.get(i) == stringInput.get(m + i)) {
-				if (i == patternInput.size() - 1) {
-					return m;
+		while ( (i + j) < stringInput.size() ) {
+			if (patternInput.get(j) == stringInput.get(i + j)) {
+				if (j == patternInput.size() - 1) {
+					return i;
 					//occurances++;
 				}
-				i++;
+				j++;
 			} else {
-				if (failTable.get(i) > -1) {
+				if (failTable.get(j) > -1) {
 
-					m = m + i - failTable.get(i);
-					i = failTable.get(i);
+					i = i + j - failTable.get(j);
+					j = failTable.get(j);
 				} else {
-					m++;
-					i = 0;
+					i++;
+					j = 0;
 				}
 			}
 		}

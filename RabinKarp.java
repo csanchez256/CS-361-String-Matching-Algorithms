@@ -95,14 +95,14 @@ public class RabinKarp {
 		m = patternInput.size();
 
 		
-		long startTime = System.nanoTime();
+		long startTime = System.currentTimeMillis();
 		
 		rabinKarp(n,m,stringInput,patternInput);
 		
-		long endTime   = System.nanoTime();
+		long endTime   = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		
-		System.out.println("Total Runtime: " + totalTime + " nano seconds");
+		System.out.println("Total Runtime: " + totalTime / 1000.0 + " Seconds");
 	}
 	
 	
@@ -120,13 +120,12 @@ public class RabinKarp {
 		ArrayList<Integer> oldChar = new ArrayList<>();
 		
 		int occurances = 0;
-		int prime = 7;
+		int prime = 101;
 		int radix = 256;
 
 		//Here is the initial hashing part
 		long patternHash = hash(patternInput.subList(0, m), prime );
 		long textHash = hash(stringInput.subList(0, m), prime );
-
 		
 		for (int i = 0; i < (n - m + 1); i++){
 			
@@ -135,7 +134,7 @@ public class RabinKarp {
 				/* TODO this part doesn't seem to check correctly with large values */
 				if (stringInput.subList( i  , i + m ).equals(patternInput.subList(0, m) )){
                     occurances++;
-                    System.out.println(" index is " + i);
+                    //System.out.println(" index is " + i);
 				}
 			}
 			

@@ -93,14 +93,14 @@ public class stringMatching {
 		m = patternInput.size();
 
 		
-		long startTime = System.nanoTime();
+		long startTime = System.currentTimeMillis();
 		
 		searchArrays(n,m,stringInput,patternInput);
 		
-		long endTime   = System.nanoTime();
+		long endTime   = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		
-		System.out.println("Total Runtime: " + totalTime + " nano seconds");
+		System.out.println("Total Runtime: " + ( totalTime / 1000.0 ) + " Seconds");
 	}
 	
 	
