@@ -9,7 +9,7 @@ import java.util.List;
  * A text file will be passed as a command line 
  * argument.
  * 
- * Compile by typing: javac rabinKarp.java
+ * Compile by typing: javac RabinKarp.java
  * Then run:
  * 
  *  > java stringMatching <textfile.example> <pattern>
@@ -17,6 +17,8 @@ import java.util.List;
 
 public class RabinKarp {
 
+	int debug = 0;
+	
 	public static void main(String[] args) {
 		
 		File inFile = null;
@@ -82,13 +84,7 @@ public class RabinKarp {
 			patternInput.add(pattern.charAt(j));
 		}
 
-		/*
-		 * Cool slick way to iterate an Arraylist with lambdas... LAMBDAS ARE
-		 * COOL NOW
-		 */
-		// stringInput.forEach((a)->System.out.print(" " + a));
-        
-		// I think it includes null characatr in size()
+		// I think it includes null character in size() So I have to subtract 1
 		n = stringInput.size() - 1;
 		m = patternInput.size();
 
@@ -103,7 +99,6 @@ public class RabinKarp {
 		System.out.println("Total Runtime: " + totalTime / 1000.0 + " Seconds");
 	}
 	
-	
 	/**
 	 * 
 	 * @param n - size of the String
@@ -112,56 +107,39 @@ public class RabinKarp {
 	 * @param patternInput
 	 */
 	
-	private static void rabinKarp(int n, int m, ArrayList<Character> string,
-			ArrayList<Character> pattern) {
+	private static void rabinKarp(int n, int m, ArrayList<Character> stringInput,
+			ArrayList<Character> patternInput) {
 		
-			int occurances = 0;
-			int h = 1;
-			int prime = 101;
-			int d = 256;
-			int p = 0;
-			int t = 0;
-			
-			
-			
-			// The value of h would be "pow(d, M-1)%q"
-		    for (int i = 0; i < m -1; i++){
-		    	h = (h*d )% prime;
-		    }
+		ArrayList<Integer> oldChar = new ArrayList<>();
+		
+		int occurances = 0;
+		int prime = 101;
+		int radix = 256;
 
-		    p("h is " + h);
-		    
-		    // preprocessing
-		    for (int i = 0; i < m ; i++){
-		    	p = ( d*p + pattern.get(i) ) % prime ;
-		    	t = ( d*t + string.get(i) ) % prime ; 
-		    }
-		    
-		    p("p is " + p);
-		    p("t is " + t);
-		    
-		    for ( int s = 0; s <= (n - m); s++){
-		    	if ( p == t){
-		    		p("this is being reached");
-		    		for ( int i = 0; i <= m; i++){
-		    			if ( pattern.get(i) != string.get(i + m) ){
-		    				break;
-		    			}
-		    			occurances++;
-		    		}
-		    	}
-		    	if( s < n - m){
-		    		t = ( d*(t - (( string.get(s+1))*h % prime) ) + string.get(s+m+1) )  % prime;
-		    	}
-		    }
-		    
-		    
-
+		//Here is the initial hashing part
+		long patternHash = hash(patternInput.subList(0, m), prime );
+		long textHash = hash(stringInput.subList(0, m), prime );
+		
+		for (int i = 0; i < (n - m + 1); i++){
+			
+			if (patternHash == textHash){
+				if (stringInput.subList( i  , i + m ).equals(patternInput.subList(0, m) )){
+                    occurances++;
+				}
+			}
+			textHash = (hash(stringInput.subList(i + 1, i + m + 1 ), prime ) );
+		}
 		
 		if( occurances > 0 ) System.out.println("Number of occurances is " + occurances);
 		else System.out.println("Pattern was not found");
 	}
 	
+	/**
+	 * Hashes substrings and returns this hash value
+	 * @param list
+	 * @param prime
+	 * @return
+	 */
 	private static int hash(List<Character> list, int prime){
 		int x = list.size();
 		int exp = x - 1;
@@ -172,14 +150,6 @@ public class RabinKarp {
 			exp--;
 		}
 		return h;
-	}
-	
-	/**
-	 * Cool little trick to simplify print statements
-	 * @param line
-	 */
-	static void p(Object line){
-		System.out.println( line );
 	}
 	
 }/* Class block */

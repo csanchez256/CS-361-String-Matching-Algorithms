@@ -57,8 +57,6 @@ public class stringMatching {
 		
 	} /* END MAIN */
 
-	
-	
 	/**
 	 * 
 	 * @param reader
@@ -121,7 +119,6 @@ public class stringMatching {
 				if (stringInput.get(i + j - 1) != patternInput.get(j)) break;
 
 				else if (j == (m - 1) ) {
-					//System.out.println("String match!");
 					occurances++;
 				}
 			}
@@ -129,6 +126,5 @@ public class stringMatching {
 		if( occurances > 0 ) System.out.println("Number of occurances is " + occurances);
 		else System.out.println("Pattern was not found");
 	}
-	
 	
 }/* Class block */

@@ -57,10 +57,8 @@ public class KMP {
 				ex.printStackTrace();
 			}
 		}
-		
 	} /* END MAIN */
 
-	
 	
 	/**
 	 * 
@@ -101,10 +99,6 @@ public class KMP {
         
         if( occurances > 0 ) System.out.println("Pattern found at " + occurances);
         
-//        else System.out.println("Pattern not found");
-        
-        //failTable.forEach((a)->System.out.print(" " + a));
-        
 		long endTime   = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		
@@ -133,7 +127,6 @@ public class KMP {
 			if (patternInput.get(j) == stringInput.get(i + j)) {
 				if (j == patternInput.size() - 1) {
 					return i;
-					//occurances++;
 				}
 				j++;
 			} else {
@@ -153,7 +146,6 @@ public class KMP {
 			return 0;
 		}
 	}
-
 
 
 	/**
@@ -187,8 +179,5 @@ public class KMP {
 				}
 			}
 	}/* End failureTable function */
-	
-	
-	
 	
 }/* Class block */
