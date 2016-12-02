@@ -9,8 +9,11 @@ import os
 def runSimulation(cmd, trials):
 	
 	runtimes = []
+	counter = 1
 
 	for n in range(trials):
+
+		print "Trial", counter
 
 		# Enter command into terminal
 		subprocess.call( cmd, shell = True )
@@ -25,7 +28,8 @@ def runSimulation(cmd, trials):
          			x = value.strip('Seconds')
                         	num = float(x)
 				runtimes.append(num)
-		              			
+
+		counter = counter + 1              			
 
 	if (trials > 1):
 		# Loops through list, and sums each element

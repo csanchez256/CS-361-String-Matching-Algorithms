@@ -95,9 +95,9 @@ public class KMP {
 		
 		//Now calculate the failure table
         failureTable(patternInput, failTable);
-        int occurences = kmpSearch(stringInput, patternInput, failTable);
+        int occurrences = kmpSearch(stringInput, patternInput, failTable);
         
-        if( occurences > 0 ) System.out.println("Pattern found at " + occurences);
+        if( occurrences > 0 ) System.out.println("Pattern found at " + occurrences);
         
 		long endTime   = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
@@ -121,7 +121,7 @@ public class KMP {
 
 		int i = 0;
 		int j = 0;
-		int occurences = 0;
+		int occurrences = 0;
 
 		while ( (i + j) < stringInput.size() ) {
 			if (patternInput.get(j) == stringInput.get(i + j)) {
@@ -140,7 +140,7 @@ public class KMP {
 				}
 			}
 		}
-		if( occurences > 0 ) return occurences;
+		if( occurrences > 0 ) return occurrences;
 		else {
 			System.out.println("Pattern not found");
 			return 0;
